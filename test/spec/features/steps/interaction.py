@@ -3,6 +3,7 @@
 '''
 
 from behave import *
+from teatray import Audio
 
 @given('I press the "{play}" button')
 def step_impl(context, play):
@@ -10,7 +11,14 @@ def step_impl(context, play):
 
 @when('I emit the signal "{signal}"')
 def step_impl(context, signal):
-    raise NotImplementedError(u'STEP: When I emit the signal 25')
+    audio = Audio()
+    if signal == 25:
+        audio.play("DragonBite.wav")
+        assert TRUE
+    elif signal == 26:
+        audio.play("DragonBite.wav")
+        audio.pause()
+        assert TRUE
 
 @then(' the audio signal "{play_state}"')
 def step_impl(context, play_state):
