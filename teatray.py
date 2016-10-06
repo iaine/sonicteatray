@@ -2,46 +2,38 @@ import pygame
 
 from time import time
 
-#paused state
-is_paused = False
-#the position of the track
-current_position = 0.0
-current_time  = None
 
-def play(filename):
-    '''
-       Start to play a file
-    '''
+class Audio():
+    def __init__(self):
+        #paused state
+        self.is_paused = False
+        #the position of the track
+        self.current_position = 0.0
+        self.current_time  = None
 
-    pygame.init()
-    pygame.mixer.init()
-    #have to load the file name
-    pygame.mixer.music.load(filename)
-    #pygame.mixer.music.volume(0.5)
-    pygame.mixer.music.play(start=current_position)
+    def play(self, filename):
+        '''
+           Start to play a file
+        '''
 
-def stop():
-    '''
-       Stop the audio
-    '''
-    pygame.mixer.music.stop()
+        pygame.init()
+        pygame.mixer.init()
+        #have to load the file name
+        pygame.mixer.music.load(filename)
+        #pygame.mixer.music.volume(0.5)
+        pygame.mixer.music.play(start=self.current_position)
 
-def pause(current_time):
-    '''
-      Pause the file as we've moved away
-    '''
-    pygame.mixer.music.pause()
-    current_position = pygame.mixer.music.get_pos()
-    #grab the current time
-    print str(time())
-    current_time = time()
+    def stop(self):
+        '''
+           Stop the audio
+        '''
+        pygame.mixer.music.stop()
 
-if __name__ == "__main__":
-
-    play("DragonBite.wav")
-    while pygame.mixer.music.get_busy(): 
-        pygame.time.Clock().tick(10)
-
-    play("DragonBite.wav")
-    pause(current_time)
-    print current_time
+    def pause(self):
+        '''
+           Pause the file as we've moved away
+        '''
+        pygame.mixer.music.pause()
+        self.current_position = pygame.mixer.music.get_pos()
+        #grab the current time
+        self.current_time = time()
