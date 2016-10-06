@@ -9,7 +9,7 @@ class Audio():
         self.is_paused = False
         #the position of the track
         self.current_position = 0.0
-        self.current_time  = None
+        self.current_time  = 0
 
     def play(self, filename):
         '''
