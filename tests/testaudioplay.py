@@ -1,6 +1,9 @@
 from nose.tools import assert_false, assert_true
 
-from teatray import Audio
+import alsaaudio
+import wave
+
+from teatray.audioplay import Audio
 
 def test_play_state():
     player = Audio()
@@ -8,5 +11,10 @@ def test_play_state():
 
 def testplay_state_runs():
     player = Audio()
-    play = player.play("DragonBite.wav")
+    card = None
+
+    f = wave.open('DragonBite.wav', 'rb')
+    device = alsaaudio.PCM(card=card)
+
+    play = player.play(device, f)
     assert_true()
