@@ -40,7 +40,7 @@ class Audio():
             # Read data from stdin
             device.write(data)
             data = filename.readframes(320)
-
+    
 
 
     def stop(self):
