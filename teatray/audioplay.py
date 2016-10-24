@@ -1,10 +1,26 @@
-import alsaaudio
+#import alsaaudio
 
 #from time import time
 
 
 class Audio():
+
+    class _AudioPlay():
+        '''
+           Singleton for a global state
+        '''
+        def __init__(self, free_busy):
+            '''
+              Set the state instance to something
+            '''
+            self.val = free_busy
+
+    #Singleton variable
+    instance = None
+
     def __init__(self):
+        #set the state
+        Audio.instance = Audio._AudioPlay(False)
 
         #paused state
         self.is_paused = False
@@ -36,6 +52,7 @@ class Audio():
         device.setperiodsize(320)
 
         data = filename.readframes(320)
+        Audio.instance.val = True
         while data:
             # Read data from stdin
             device.write(data)
