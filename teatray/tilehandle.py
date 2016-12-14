@@ -18,3 +18,5 @@ class TileState():
         #return the type of MP3 by the tile
         if tile_num is 25:
             return "wheatear.mp3"
+        elif tile_num is 26:
+            return "cuckoo.mp3"
