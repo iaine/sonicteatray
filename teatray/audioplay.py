@@ -1,74 +1,22 @@
-#import alsaaudio
+'''
+   Audio handling
+'''
 
-#from time import time
-
+import pygame.mixer
 
 class Audio():
-
-    class _AudioPlay():
-        '''
-           Singleton for a global state
-        '''
-        def __init__(self, free_busy):
-            '''
-              Set the state instance to something
-            '''
-            self.val = free_busy
-
-    #Singleton variable
-    instance = None
-
-    def __init__(self):
-        #set the state
-        Audio.instance = Audio._AudioPlay(False)
-
-        #paused state
-        self.is_paused = False
-        #the position of the track
-        self.current_position = 0.0
-        self.current_time  = 0
-
-    def play(self, device, filename):
-        '''
-           Start to play a file
-        '''
-        # Set attributes
-        device.setchannels(filename.getnchannels())
-        device.setrate(filename.getframerate())
-
-        # 8bit is unsigned in wav files
-        if filename.getsampwidth() == 1:
-            device.setformat(alsaaudio.PCM_FORMAT_U8)
-        # Otherwise we assume signed data, little endian
-        elif filename.getsampwidth() == 2:
-            device.setformat(alsaaudio.PCM_FORMAT_S16_LE)
-        elif filename.getsampwidth() == 3:
-            device.setformat(alsaaudio.PCM_FORMAT_S24_LE)
-        elif filename.getsampwidth() == 4:
-            device.setformat(alsaaudio.PCM_FORMAT_S32_LE)
-        else:
-            raise ValueError('Unsupported format')
-
-        device.setperiodsize(320)
-
-        data = filename.readframes(320)
-        Audio.instance.val = True
-        while data:
-            # Read data from stdin
-            device.write(data)
-            data = filename.readframes(320)
     
+    def __init__(self):
+        pygame.mixer.init(frequency=44100, size=-16, channels=2, buffer=4096)
 
-
-    def stop(self):
+    def play(self, filename):
         '''
-           Stop the audio
+           Play a file. 
         '''
-        raise NotImplementedError
-
-    def pause(self):
-        '''
-           Pause the file as we've moved away
-        '''
-        # Alsaaudio suggests PCM.pause - so device.pause()
-        raise NotImplementedError
+        if filename is None or filename == '':
+            print("It fewll over")
+        else:
+            pygame.mixer.music.load(filename)
+            pygame.mixer.music.play() 
+            while pygame.mixer.get_busy():
+                pygame.time.delay(100)
