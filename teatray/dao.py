@@ -9,6 +9,8 @@ class DAO():
         conn = sqlite3.connect('teatraystore.db')
         self.db = conn.cursor()
 
+        self.check_table_exists('sounds')
+
     def check_table_exists(self, table_name):
         '''
           Query to check thatthe table exists. If not create it.
