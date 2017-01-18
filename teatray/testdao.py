@@ -6,7 +6,7 @@ import sqlite3
 from dao import DAO
 
 def teardown_func():
-    os.remove('*.db')
+    os.remove('teatraystore.db')
 
 def test_dao_init():
     t = DAO()
@@ -18,24 +18,23 @@ def test_dao_init_false():
     fname = os.path.isfile('store.db')
     assert_false(fname)
 
+@with_setup(teardown_func)
 def test_dao_table_exists():
     t = DAO()
     conn = sqlite3.connect('teatraystore.db')
     db = conn.cursor()
-    table = db.execute("SELECT name FROM sqlite_master WHERE type='table' AND name=?", ('sounds',))
-    assert_false(table.fetchone())
     t.check_table_exists('sounds')
     table_1 = db.execute("SELECT name FROM sqlite_master WHERE type='table' AND name=?", ('sounds',))
     assert_true(table_1.fetchone())
 
+@with_setup(teardown_func)
 def test_fetch_without_insert():
     t = DAO()
     assert_false(t.fetch(25) == "wheatear.mp3")
 
+@with_setup(teardown_func)
 def test_insert_data():
     t = DAO()
     t.insert_data([(25, "wheatear.mp3"), (26, "cuckoo.mp3")])
-    print t.fetch(25)
-
     assert_true(t.fetch(25) == "wheatear.mp3")
     assert_false(t.fetch(25) == "cuckoo.mp3")
