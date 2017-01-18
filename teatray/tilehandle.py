@@ -1,8 +1,7 @@
 '''
    Handle the tile and mappings
 '''
-
-
+from dao import DAO
 
 class TileState():
     state = None
@@ -25,7 +24,16 @@ class TileState():
            Interface for fetching the file attached to the tile
         '''
         #return the type of MP3 by the tile
-        if tile_num is 25:
-            return "wheatear.mp3"
-        elif tile_num is 26:
-            return "cuckoo.mp3" 
+        try:
+            if tile_num is None:
+                raise Exception("No tile given")
+
+            db = DAO()
+            fname = db.fetch(tile_num)
+
+            if fname is None:
+                raise Exception("No file returned")
+            else:
+                return fname
+        except Exception,e:
+            print(e)
