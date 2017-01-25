@@ -5,6 +5,7 @@ from dao import DAO
 _tmp_state = None
 asignal = None
 
+@then(u'I am silent')
 @given(u'I am silent')
 def step_impl(context):
     t = TileState()
@@ -13,6 +14,10 @@ def step_impl(context):
 @given(u'I am playing audio from {tile}')
 def step_impl(context, tile):
     global _tmp_state, asignal
+    # this needs moving into environment
+    d = DAO()
+    #d.check_table_exists('sounds')
+    d.insert_data([(25, "wheatear.mp3"), (26, "cuckoo.mp3")])
     t = TileState()
     asignal = t.handle_tile(int(tile))
     assert t.state is True
@@ -35,7 +40,3 @@ def step_impl(context, recording):
     global _tmp_state, asignal
     assert _tmp_state is True
     assert asignal == recording
-
-@then(u'the time {pin} stopped is recorded')
-def step_impl(context, pin):
-    raise NotImplementedError(u'STEP: Then the time 25 stopped is recorded')
