@@ -35,6 +35,12 @@ def test_fetch_without_insert():
 @with_setup(teardown_func)
 def test_insert_data():
     t = DAO()
+    t.check_table_exists('sounds')
     t.insert_data([(25, "wheatear.mp3"), (26, "cuckoo.mp3")])
     assert_true(t.fetch(25) == "wheatear.mp3")
     assert_false(t.fetch(25) == "cuckoo.mp3")
+
+def test_store_time():
+    t = DAO()
+    t.check_table_exists('tile')
+
