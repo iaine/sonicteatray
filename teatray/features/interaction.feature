@@ -17,6 +17,10 @@ So that I can hear the description
     When I emit the signal 26
     Then the audio for "cuckoo.mp3" begins
 
+    Given I am playing audio from 26
+    When I emit the signal 25
+    Then the audio for "wheatear.mp3" resumes
+
   Scenario: I touch a tile attached to the GPIO pin 27 with no audio
     Given I am silent
     When I emit the signal 27

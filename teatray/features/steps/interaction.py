@@ -40,3 +40,7 @@ def step_impl(context, recording):
     global _tmp_state, asignal
     assert _tmp_state is True
     assert asignal == recording
+
+@then(u'the audio for "wheatear.mp3" resumes')
+def step_impl(context):
+    raise NotImplementedError(u'STEP: Then the audio for "wheatear.mp3" resumes')
