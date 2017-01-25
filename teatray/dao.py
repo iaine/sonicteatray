@@ -16,8 +16,12 @@ class DAO():
         '''
         self.db.execute("SELECT name FROM sqlite_master WHERE type='table' AND name=?", (table_name,))
         if self.db.fetchone() is None:
-            self.db.execute(''' CREATE TABLE sounds
+            if table_name == 'sounds':
+                self.db.execute(''' CREATE TABLE sounds
                                 (tile_num real, soundfile text)''')
+            if table_name == 'tile':
+                self.db.execute(''' CREATE TABLE tile
+                                (pin real, store real)''')
 
     def fetch(self, tile):
         '''
