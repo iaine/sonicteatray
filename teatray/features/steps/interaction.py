@@ -1,7 +1,7 @@
 from behave import *
 
 from tilehandle import TileState
-
+from dao import DAO
 _tmp_state = None
 asignal = None
 
@@ -35,3 +35,7 @@ def step_impl(context, recording):
     global _tmp_state, asignal
     assert _tmp_state is True
     assert asignal == recording
+
+@then(u'the time {pin} stopped is recorded')
+def step_impl(context, pin):
+    raise NotImplementedError(u'STEP: Then the time 25 stopped is recorded')
