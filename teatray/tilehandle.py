@@ -2,7 +2,7 @@
    Handle the tile and mappings
 '''
 from dao import DAO
-from datetime import datetime
+import time
 
 class TileState():
     state = None
@@ -22,7 +22,7 @@ class TileState():
         self.state = True
         if tile_num == 30: 
             self.overview = True
-            self.cmd_time = datetime.now()
+            self.cmd_time = time.ctime()
 
         #return the type of MP3 by the tile
         return self._get_file_for_tile(tile_num)

@@ -2,7 +2,7 @@ from nose.tools import *
 import os
 from tilehandle import TileState
 import sqlite3
-from datetime import datetime
+import time
 
 def setup_db_func():
     c = sqlite3.connect('teatraystore.db')
@@ -37,7 +37,7 @@ def test_tile_overview_change():
 def test_tile_time_change():
     t = TileState()
     rec = t.handle_tile(30)
-    assert_almost_equal(t.cmd_time, datetime.now(), 1000) 
+    assert_almost_equal(t.cmd_time, time.ctime(), 1000) 
 
 @with_setup(setup_db_func, teardown_db_func)
 def test_tile_handle():
