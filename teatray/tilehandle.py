@@ -20,12 +20,13 @@ class TileState():
         '''
         #change the state
         self.state = True
+        # if the oveerview is hit, it sets a lock
         if tile_num == 30: 
             self.overview = True
             self.cmd_time = time.ctime()
-
-        #return the type of MP3 by the tile
-        return self._get_file_for_tile(tile_num)
+        elif tile_num != 30 and time.ctime() > (self.cmd_time + 5*600000):
+            self.overview = False
+            return self._get_file_for_tile(tile_num)
 
     def _get_file_for_tile (self, tile_num):
         '''
