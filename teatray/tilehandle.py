@@ -5,6 +5,7 @@ from dao import DAO
 import time
 
 class TileState():
+    STOP_RUN = 5*600000
     state = None
     overview = None
     cmd_time = 0
@@ -24,7 +25,7 @@ class TileState():
         if tile_num == 30: 
             self.overview = True
             self.cmd_time = time.ctime()
-        elif tile_num != 30 and time.ctime() > (self.cmd_time + 5*600000):
+        elif tile_num != 30 and time.ctime() > (self.cmd_time + STOP_RUN):
             self.overview = False
             return self._get_file_for_tile(tile_num)
 
