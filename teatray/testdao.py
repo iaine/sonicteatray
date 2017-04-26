@@ -43,4 +43,4 @@ def test_insert_data():
 def test_store_time():
     t = DAO()
     t.check_table_exists('tile')
-
+    t.insert_time_data([(25,"12345678.004")])
