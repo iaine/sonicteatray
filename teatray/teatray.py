@@ -23,7 +23,7 @@ GPIO.setmode(GPIO.BCM)
 pins= [24,27]
 for pin in pins:
     GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-    GPIO.add_event_detect(padPin, GPIO.RISING, callback=motion)
+    GPIO.add_event_detect(pin, GPIO.RISING, callback=motion)
 
 pad_already_pressed = False
 #pad_already_pressed_2 = False
