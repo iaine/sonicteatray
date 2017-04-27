@@ -49,7 +49,7 @@ pad_already_pressed = False
 #        print "Stop Motion detected on " + str(padPin)
 #        pad_already_pressed_2 = True
 
-GPIO.add_event_detect(padPin, GPIO.RISING, callback=motion)
+#GPIO.add_event_detect(padPin, GPIO.RISING, callback=motion)
 #GPIO.add_event_detect(padPin2, GPIO.RISING, callback=stopmotion)
 
 try: 
@@ -58,8 +58,8 @@ try:
     while 1:  
         time.sleep(1)
         
-        pad_already_pressed = False
-        pad_already_pressed_2 = False
+#        pad_already_pressed = False
+#        pad_already_pressed_2 = False
 except KeyboardInterrupt:
     GPIO.cleanup()
 #pause()
