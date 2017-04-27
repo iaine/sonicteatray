@@ -20,6 +20,9 @@ GPIO.setmode(GPIO.BCM)
 
 #padPin2 = 27
 #GPIO.setup(padPin2, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+def motion(padPin):
+    tile.handle(padPin)
+
 pins= [24,27]
 for pin in pins:
     GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
@@ -28,8 +31,8 @@ for pin in pins:
 pad_already_pressed = False
 #pad_already_pressed_2 = False
 
-def motion(padPin):
-    tile.handle(padPin)
+#def motion(padPin):
+#    tile.handle(padPin)
 #    global pad_already_pressed
 #    if not pad_already_pressed:
 #        pygame.mixer.music.load("/home/iain/wheatear.mp3") 
