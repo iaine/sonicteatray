@@ -21,11 +21,14 @@ class TileState():
         '''
         #change the state
         self.state = True
-        # if the oveerview is hit, it sets a lock
-        if tile_num == 30: 
+        # if the overview is hit, it sets a lock
+        if tile_num == 16: 
             self.overview = True
             self.cmd_time = time.ctime()
-        elif tile_num != 30 and time.ctime() > (self.cmd_time + STOP_RUN):
+            return self._get_file_for_tile(tile_num)
+        elif tile_num == 13:
+            play.stop()            
+        elif time.ctime() > (self.cmd_time + STOP_RUN):
             self.overview = False
             return self._get_file_for_tile(tile_num)
 
