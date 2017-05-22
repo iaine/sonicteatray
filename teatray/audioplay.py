@@ -42,3 +42,9 @@ class Audio():
 
         pygame.mixer.music.pause()
         self.set_time = pygame.mixer.music.get_pos()
+
+    def stop(self):
+        '''
+           Stops all play
+        '''
+        pygame.mixer.stop()
