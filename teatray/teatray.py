@@ -9,7 +9,7 @@ GPIO.setmode(GPIO.BCM)
 def motion(padPin):
     tile.tile_handle(padPin)
 
-pins= [24,27, 13, 15]
+pins= [24,27, 13, 16]
 for pin in pins:
     GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
     GPIO.add_event_detect(pin, GPIO.RISING, callback=motion)
