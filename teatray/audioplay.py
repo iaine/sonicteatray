@@ -20,8 +20,7 @@ class Audio():
             if filename is None or filename == '':
                 raise Exception("No file name provided")
             else:
-                if not pygame.mixer.music.load(filename):
-                    raise Exception ("file not found",%filename)
+                pygame.mixer.music.load(filename):
                 pygame.mixer.music.play()    
                 while pygame.mixer.music.get_busy():
                     pygame.time.delay(100)
