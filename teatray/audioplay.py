@@ -20,10 +20,12 @@ class Audio():
             if filename is None or filename == '':
                 raise Exception("No file name provided")
             else:
+                if pygame.mixer.music.get_busy():
+                    pygame.mixer.stop()
                 pygame.mixer.music.load(filename)
                 pygame.mixer.music.play()    
-                while pygame.mixer.music.get_busy():
-                    pygame.time.delay(100)
+                #while pygame.mixer.music.get_busy():
+                #    pygame.time.delay(100)
         except Exception, e:
             print(e)
 
@@ -31,14 +33,7 @@ class Audio():
         '''
            Pause the file and set the position if we need to return
         '''
-        if filename is None or filename == '':
-            print("It fewll over")
-        else:
-            pygame.mixer.music.load(filename)
-            pygame.mixer.music.play() 
-            while pygame.mixer.get_busy():
-                self.pygame.time.delay(100)
-
+        pygame.mixer.init(frequency=44100, size=-16, channels=2, buffer=4096)
         pygame.mixer.music.pause()
         self.set_time = pygame.mixer.music.get_pos()
 
@@ -46,4 +41,5 @@ class Audio():
         '''
            Stops all play
         '''
+        pygame.mixer.init(frequency=44100, size=-16, channels=2, buffer=4096)
         pygame.mixer.stop()
