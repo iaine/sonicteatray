@@ -43,9 +43,15 @@ class TileState():
             if tile_num is None:
                 raise Exception("No tile given")
 
-            db = DAO()
-            fname = db.fetch(tile_num)
-
+            #db = DAO()
+            #fname = db.fetch(tile_num)
+            fname = ''
+            if tile_num == 24:
+                return "/home/iain/sonicteatray/teatray/data/Barnacles_01.mp3"
+            elif tile_num == 27:
+                return "/home/iain/sonicteatray/teatray/data/Prayer_Wheel_01.mp3"
+            elif tile_num == 16:
+                return "/home/iain/sonicteatray/teatray/data/Chinese_Tea_Brick_01.mp3"
             if fname is None:
                 raise Exception("No file returned")
             else:
