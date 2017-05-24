@@ -29,7 +29,7 @@ class TileState():
             self.cmd_time = time.ctime()
             return audio.play(self._get_file_for_tile(tile_num))
         elif tile_num == 13:
-            play.stop()            
+            audio.stop()            
         elif time.ctime() > (self.cmd_time + self.STOP_RUN):
             self.overview = False
             return audio.play(self._get_file_for_tile(tile_num))
