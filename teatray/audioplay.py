@@ -16,12 +16,12 @@ class Audio():
            @parameter filename
         '''
         try:
-            pygame.mixer.init(frequency=44100, size=-16, channels=2, buffer=4096)
+            #pygame.mixer.init(frequency=44100, size=-16, channels=2, buffer=4096)
             if filename is None or filename == '':
                 raise Exception("No file name provided")
             else:
-                pygame.mixer.music.load(filename):
-                pygame.mixer.music.play()    
+                self.pygame.mixer.music.load(filename):
+                self.pygame.mixer.music.play()    
                 while pygame.mixer.music.get_busy():
                     pygame.time.delay(100)
         except Exception, e:
