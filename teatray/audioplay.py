@@ -7,7 +7,7 @@ import pygame.mixer
 class Audio():
     set_time = None
     def __init__(self):
-        self.pygame.mixer.init(frequency=44100, size=-16, channels=2, buffer=4096)
+        #self.pygame.mixer.init(frequency=44100, size=-16, channels=2, buffer=4096)
         self.set_time = None
 
     def play(self, filename):
@@ -16,12 +16,12 @@ class Audio():
            @parameter filename
         '''
         try:
-            #pygame.mixer.init(frequency=44100, size=-16, channels=2, buffer=4096)
+            pygame.mixer.init(frequency=44100, size=-16, channels=2, buffer=4096)
             if filename is None or filename == '':
                 raise Exception("No file name provided")
             else:
-                self.pygame.mixer.music.load(filename):
-                self.pygame.mixer.music.play()    
+                pygame.mixer.music.load(filename)
+                pygame.mixer.music.play()    
                 while pygame.mixer.music.get_busy():
                     pygame.time.delay(100)
         except Exception, e:
@@ -34,8 +34,8 @@ class Audio():
         if filename is None or filename == '':
             print("It fewll over")
         else:
-            self.pygame.mixer.music.load(filename)
-            self.pygame.mixer.music.play() 
+            pygame.mixer.music.load(filename)
+            pygame.mixer.music.play() 
             while pygame.mixer.get_busy():
                 self.pygame.time.delay(100)
 
