@@ -1,0 +1,15 @@
+<doctype html>
+{% block body %}
+<div id="img_src">
+<p onmousedown="set_xy(event)" ><img src="{{record}}" width="968" />
+</div>
+<script type="javascript">
+function set_xy(evt) {
+  document.body.textContent =
+    "clientX: " + evt.clientX +
+    " - clientY: " + evt.clientY;
+}
+
+document.addEventListener("click", printMousePos);
+</script>
+{% endblock %}
