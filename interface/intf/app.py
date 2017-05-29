@@ -2,12 +2,14 @@ import os
 from flask import Flask, request, redirect, url_for
 from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = '/path/to/the/uploads'
+IMAGE_UPLOAD_FOLDER = '/path/to/the/uploads'
+AUDIO_UPLOAD_FOLDER = '/path/to/the/uploads'
 ALLOWED_EXTENSIONS_AUDIO = set(['mp3'])
 ALLOWED_EXTENSIONS_PIC = set(['jpg', 'png', 'jpeg'])
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['IMAGE_UPLOAD_FOLDER'] = IMAGE_UPLOAD_FOLDER
+app.config['AUDIO_UPLOAD_FOLDER'] = AUDIO_UPLOAD_FOLDER
 
 #set up a global for audio. 
 
@@ -49,7 +51,7 @@ def upload_file(uid):
             return redirect(request.url)
         if file and allowed_file(file.filename, ALLOWED_EXTENSIONS_AUDIO):
             filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            file.save(os.path.join(app.config['AUDIO_UPLOAD_FOLDER'], filename))
             return redirect(url_for('uploaded_file', filename=filename))
     if request.method == 'GET':
         fname = "turner.jpg"
@@ -76,6 +78,6 @@ def get_files():
             return redirect(request.url)
         if file and allowed_file(file.filename, ALLOWED_EXTENSIONS_PIC):
             filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            file.save(os.path.join(app.config['IMAGE_UPLOAD_FOLDER'], filename))
             return redirect(url_for('uploaded_file', filename=filename))
     
