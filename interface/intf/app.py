@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, redirect, url_for, render_template
+from flask import Flask, request, redirect, url_for, render_template, flash
 from werkzeug.utils import secure_filename
 
 IMAGE_UPLOAD_FOLDER = 'static/images/'
@@ -7,9 +7,12 @@ AUDIO_UPLOAD_FOLDER = 'audio'
 ALLOWED_EXTENSIONS_AUDIO = set(['mp3'])
 ALLOWED_EXTENSIONS_PIC = set(['jpg', 'png', 'jpeg'])
 
+coords = []
+
 app = Flask(__name__)
 app.config['IMAGE_UPLOAD_FOLDER'] = IMAGE_UPLOAD_FOLDER
 app.config['AUDIO_UPLOAD_FOLDER'] = AUDIO_UPLOAD_FOLDER
+app.config['SECRET_KEY'] = '\x0bE\x85\xed\xb0\xa5\xda\x90\xb2\x94\xd0\x02\x96\xda=\xf1\x83w\x9ei\xc3#|\xa2'
 
 #set up a global for audio. 
 
@@ -38,9 +41,11 @@ def allowed_file(filename, extension):
 
 @app.route('/record/<uid>', methods=['GET', 'POST'])
 def upload_file(uid):
-    if request.method == 'PUT':
+    if request.method == 'POST':
+        print(request.form)
         # check if the post request has the file part
         if 'file' not in request.files:
+            print('No files')
             flash('No file part')
             return redirect(request.url)
         file = request.files['file']
@@ -52,14 +57,16 @@ def upload_file(uid):
         if file and allowed_file(file.filename, ALLOWED_EXTENSIONS_AUDIO):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['AUDIO_UPLOAD_FOLDER'], filename))
-            return redirect(url_for('uploaded_file', filename=filename))
+            return redirect('record/'+uid)
+
     if request.method == 'GET':
         fname = None
         for f in os.listdir("data"):
-            print f
             if f[:len(uid)] == uid:
                 fname = f
-        return render_template('record.html', record=fname)
+        coords.append({'x': 347, 'y':426})
+        coords.append({'x':186,'y':124})
+        return render_template('record.html', record=fname, coords=coords)
 
 def get_records():
     data = os.listdir("data")
@@ -85,4 +92,4 @@ def get_files():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['IMAGE_UPLOAD_FOLDER'], filename))
             return redirect(url_for('get_files'))
-    
+     
