@@ -2,7 +2,7 @@
     <title>List of Records</title>
     <div id="records">
     {% for record in records %}
-      <a href="{record.text}">{record.text}</a>
+      <a href="record/{{record}}">{{record}}</a>
     {% endfor %}
     </div>
     <div id="upload">

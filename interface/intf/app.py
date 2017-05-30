@@ -1,9 +1,9 @@
 import os
-from flask import Flask, request, redirect, url_for
+from flask import Flask, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
 
-IMAGE_UPLOAD_FOLDER = '/path/to/the/uploads'
-AUDIO_UPLOAD_FOLDER = '/path/to/the/uploads'
+IMAGE_UPLOAD_FOLDER = 'static/images/'
+AUDIO_UPLOAD_FOLDER = 'audio'
 ALLOWED_EXTENSIONS_AUDIO = set(['mp3'])
 ALLOWED_EXTENSIONS_PIC = set(['jpg', 'png', 'jpeg'])
 
@@ -13,7 +13,7 @@ app.config['AUDIO_UPLOAD_FOLDER'] = AUDIO_UPLOAD_FOLDER
 
 #set up a global for audio. 
 
-@app.route('/picture/<string>', methods=['POST'])
+@app.route('/<string>', methods=['POST'])
 def query_picture_position(uid_str):
     '''
        Takes the (x,y) tuple from post and retrieves the audio if near
@@ -36,7 +36,7 @@ def allowed_file(filename, extension):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in extension
 
-@app.route('/record/<string>', methods=['GET', 'POST'])
+@app.route('/record/<uid>', methods=['GET', 'POST'])
 def upload_file(uid):
     if request.method == 'PUT':
         # check if the post request has the file part
@@ -54,17 +54,22 @@ def upload_file(uid):
             file.save(os.path.join(app.config['AUDIO_UPLOAD_FOLDER'], filename))
             return redirect(url_for('uploaded_file', filename=filename))
     if request.method == 'GET':
-        fname = "turner.jpg"
-        return render_template('record.html', fname=record)
+        fname = None
+        for f in os.listdir("data"):
+            print f
+            if f[:len(uid)] == uid:
+                fname = f
+        return render_template('record.html', record=fname)
 
 def get_records():
-    return ['a', 'b', 'c']
+    data = os.listdir("data")
+    return [datum.split('.')[0] for datum in data]
 
 @app.route('/record', methods=['GET', 'POST'])
 def get_files():
     if request.method == 'GET':
         records = get_records()
-        return render_template('records.html')
+        return render_template('records.html', records=records)
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
@@ -79,5 +84,5 @@ def get_files():
         if file and allowed_file(file.filename, ALLOWED_EXTENSIONS_PIC):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['IMAGE_UPLOAD_FOLDER'], filename))
-            return redirect(url_for('uploaded_file', filename=filename))
+            return redirect(url_for('get_files'))
     
