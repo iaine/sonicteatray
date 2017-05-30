@@ -5,7 +5,29 @@
 </div>
 <script type="text/javascript">
 function set_xy(evt) {
-  console.log("clientX: " + evt.clientX + " - clientY: " + evt.clientY);
+  console.log("clientX: " + evt.clientX + " - clientY: " + evt.clientY)
+  var x = document.getElementById("img_src");
+  var createform = document.createElement('form'); // Create New Element Form
+  createform.setAttribute("action", ""); // Setting Action Attribute on Form
+  createform.setAttribute("method", "post"); // Setting Method Attribute on Form
+
+  var namelabel = document.createElement('label'); // Create Label for Name Field
+  namelabel.innerHTML = "Please upload file "; // Set Field Labels
+  createform.appendChild(namelabel);
+
+  var inputelement = document.createElement('input'); // Create Input Field for Name
+  inputelement.setAttribute("type", "file");
+  inputelement.setAttribute("Audio File", "file");
+
+  // Submit
+  var submitelement = document.createElement('input'); // Append Submit Button
+  submitelement.setAttribute("type", "submit");
+  submitelement.setAttribute("name", "dsubmit");
+  submitelement.setAttribute("value", "Submit");
+  createform.appendChild(submitelement);
+
+  x.appendChild(createform);
+
 }
 
 document.addEventListener("click", set_xy);
