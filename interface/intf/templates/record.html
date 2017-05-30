@@ -1,9 +1,27 @@
 <doctype html>
 {% block body %}
-<p onmousedown="set_xy(event)" ><img src="../static/images/{{record}}" width="968" />
+<p onmousedown="set_xy(event)" ><img id="theImg" src="../static/images/{{record}}" width="968" /></p>
+<canvas id='myCanvas' width="968" height="450"></canvas>
 <div id="img_src">
 </div>
 <script type="text/javascript">
+function mark_image(coords) {
+  var img = document.getElementById("img_src");
+  var cnvs = document.getElementById("myCanvas");
+  
+  cnvs.style.position = "absolute";
+  cnvs.style.left = img.offsetLeft + "px";
+  cnvs.style.top = img.offsetTop + "px";
+  for (var i in coords) {
+    var ctx = cnvs.getContext("2d");
+    ctx.beginPath();
+    ctx.arc(coords[i].x, coords[i].y, 10, 0, 2 * Math.PI, false);
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = '#00ff00';
+    ctx.stroke();
+  }
+}
+
 function set_xy(evt) {
   console.log("clientX: " + evt.clientX + " - clientY: " + evt.clientY)
   var x = document.getElementById("img_src");
@@ -15,9 +33,19 @@ function set_xy(evt) {
   namelabel.innerHTML = "Please upload file "; // Set Field Labels
   createform.appendChild(namelabel);
 
+  var xelement = document.createElement('x');
+  xelement.setAttribute("value", evt.clientX);
+  xelement.setAttribute("type", "hidden");
+  createform.appendChild(xelement);
+
+  var yelement = document.createElement('y');
+  yelement.setAttribute("value", evt.clientY);
+  yelement.setAttribute("type", "hidden");
+  createform.appendChild(yelement);
+
   var inputelement = document.createElement('input'); // Create Input Field for Name
   inputelement.setAttribute("type", "file");
-  inputelement.setAttribute("Audio File", "file");
+  createform.appendChild(inputelement);
 
   // Submit
   var submitelement = document.createElement('input'); // Append Submit Button
@@ -30,6 +58,7 @@ function set_xy(evt) {
 
 }
 
-document.addEventListener("click", set_xy);
+document.addEventListener("dblclick", set_xy);
 </script>
+<script type="text/javascript">mark_image({{coords | safe}})</script>
 {% endblock %}
