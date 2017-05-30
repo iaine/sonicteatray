@@ -42,10 +42,8 @@ def allowed_file(filename, extension):
 @app.route('/record/<uid>', methods=['GET', 'POST'])
 def upload_file(uid):
     if request.method == 'POST':
-        print(request.form)
         # check if the post request has the file part
         if 'file' not in request.files:
-            print('No files')
             flash('No file part')
             return redirect(request.url)
         file = request.files['file']
@@ -55,9 +53,14 @@ def upload_file(uid):
             flash('No selected file')
             return redirect(request.url)
         if file and allowed_file(file.filename, ALLOWED_EXTENSIONS_AUDIO):
+            coords.append({'x':float(request.values["x"]), 'y':float(request.values["y"])})
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['AUDIO_UPLOAD_FOLDER'], filename))
-            return redirect('record/'+uid)
+            fname = None
+            for f in os.listdir("data"):
+                if f[:len(uid)] == uid:
+                    fname = f
+            return render_template('record.html', record=fname, coords=coords)
 
     if request.method == 'GET':
         fname = None
